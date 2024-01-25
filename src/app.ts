@@ -1,10 +1,28 @@
 import express from 'express'
 import path from 'path'
+import { Pool, Client } from 'pg'
 
 const app = express()
 app.use(express.json())
 
 const port = 3000
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+})
+
+client.connect()
+
+// Create table if not exists
+client.query(`
+  CREATE TABLE IF NOT EXISTS sessions (
+    id TEXT PRIMARY KEY,
+    latitude REAL,
+    longitude REAL,
+    timestamp BIGINT,
+    key TEXT
+  )
+`)
 
 interface GeoData {
   latitude: number
@@ -13,16 +31,8 @@ interface GeoData {
   timestamp: number
 }
 
-const sessionData: Map<String, GeoData> = new Map()
 
-sessionData.set('test-id', {
-  latitude: 43.3,
-  longitude: 5.4,
-  key: 'test-key',
-  timestamp: new Date().getTime()
-})
-
-app.post('/api/session/:id', (req, res) => {
+app.post('/api/session/:id', async (req, res) => {
 
   const { id } = req.params
 
@@ -34,42 +44,55 @@ app.post('/api/session/:id', (req, res) => {
   // Validate JSON data
   if (!geoData.latitude || !geoData.longitude || !geoData.key || !geoData.timestamp) {
     res.status(400).send('Invalid data')
+    return
   }
 
-  if (!sessionData.has(id)) {
+  // Check for session
+  const session = await client.query(`SELECT * FROM sessions WHERE id = '${id}'`)
 
-    sessionData.set(id, geoData)
+  if (session.rowCount === 0) {
+
+    // Create session
+    const session = await client.query(`INSERT INTO sessions (id, latitude, longitude, timestamp, key) VALUES ('${id}', ${geoData.latitude}, ${geoData.longitude}, ${geoData.timestamp}, '${geoData.key}')`)
 
     res.status(200).send('Session created')
+    return
 
   } else {
 
-    if (sessionData.get(id)?.key === geoData.key) {
+    if (geoData.key === session.rows[0].key) {
+      // Update session
+      const session = await client.query(`UPDATE sessions SET latitude = ${geoData.latitude}, longitude = ${geoData.longitude}, timestamp = ${geoData.timestamp} WHERE id = '${id}'`)
       res.status(200).send('Session updated')
     } else {
       res.status(400).send('Invalid key')
     }
 
+    return
+
   }
 
-  // Delete sessions older than 1 hour
-  const now = new Date().getTime()
+  // // Delete sessions older than 1 hour
+  // const now = new Date().getTime()
 
-  sessionData.forEach((value, key) => {
-    if (now - value.timestamp > 3600000) {
-      sessionData.delete(key)
-    }
-  })
+  // const outdatedSessions = await client.query(`SELECT * FROM sessions WHERE timestamp < ${now - 3600000}`)
+
+  // outdatedSessions.rows.forEach(async (session) => {
+  //   await client.query(`DELETE FROM sessions WHERE id = '${session.id}'`)
+  // })
 
 })
 
-app.get('/api/session/:id', (req, res) => {
+app.get('/api/session/:id', async (req, res) => {
 
   const { id } = req.params
 
-  if (sessionData.has(id)) {
+  // Check for session
+  const session = await client.query(`SELECT * FROM sessions WHERE id = '${id}'`)
 
-    const geoData = sessionData.get(id)
+  if (session.rowCount === 1) {
+
+    const geoData = session.rows[0]
 
     if (geoData) {
       res.status(200).json({
@@ -78,12 +101,15 @@ app.get('/api/session/:id', (req, res) => {
         timestamp: geoData.timestamp
       })
     } else {
-      sessionData.delete(id)
+      await client.query(`DELETE FROM sessions WHERE id = '${id}'`)
       res.status(400).send('No session found')
     }
 
+    return
+
   } else {
     res.status(400).send('No session found')
+    return
   }
 
 })

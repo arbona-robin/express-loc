@@ -12,3 +12,16 @@ services:
       - 3000:3000
       - 9229:9229
     command: yarn nodemon --signal SIGINT --inspect=0.0.0.0:9229 --nolazy src/app.ts
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+
+  db:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
