@@ -26,6 +26,14 @@
     <h1>Locate me!</h1>
     <div id="map"></div>
     <script>
+      const getSessionId = () => {
+        const queryString = window.location.search
+        const urlParams = new URLSearchParams(queryString)
+        return urlParams.get('session')
+      }
+
+      const sessionId = getSessionId()
+
       var map = L.map('map')
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -36,23 +44,25 @@
 
       var circle = L.circleMarker([0, 0]).addTo(map)
 
-      const updateMap = () => {
-        fetch('api/session/test-id')
-          .then(response => response.json())
-          .then(data => {
-            // Update the map
-            console.log('Update map')
-            map.setView([data.latitude, data.longitude], 13)
-            circle.setLatLng([data.latitude, data.longitude])
-            circle.setRadius(100)
-          })
+      if (sessionId) {
+        const updateMap = () => {
+          fetch(`api/session/${sessionId}`)
+            .then(response => response.json())
+            .then(data => {
+              // Update the map
+              console.log('Update map')
+              map.setView([data.latitude, data.longitude], 13)
+              circle.setLatLng([data.latitude, data.longitude])
+              circle.setRadius(100)
+            })
+        }
+
+        // Initialize map
+        updateMap()
+
+        // Refresh map every X ms
+        setInterval(updateMap, 5000)
       }
-
-      // Initialize map
-      updateMap()
-
-      // Refresh map every X ms
-      setInterval(updateMap, 5000)
     </script>
   </body>
 </html>
