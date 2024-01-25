@@ -18,7 +18,7 @@
 
     <style>
       #map {
-        height: 400px;
+        height: 80vh;
       }
     </style>
   </head>
@@ -34,18 +34,25 @@
         maxZoom: 18,
       }).addTo(map)
 
-      L.marker([51.5, -0.09])
-        .addTo(map)
-        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-        .openPopup()
+      var circle = L.circleMarker([0, 0]).addTo(map)
 
-      fetch('api/session/test-id')
-        .then(response => response.json())
-        .then(data => {
-          // Update the map
-          console.log(data)
-          map.setView([data.latitude, data.longitude], 13)
-        })
+      const updateMap = () => {
+        fetch('api/session/test-id')
+          .then(response => response.json())
+          .then(data => {
+            // Update the map
+            console.log('Update map')
+            map.setView([data.latitude, data.longitude], 13)
+            circle.setLatLng([data.latitude, data.longitude])
+            circle.setRadius(100)
+          })
+      }
+
+      // Initialize map
+      updateMap()
+
+      // Refresh map every X ms
+      setInterval(updateMap, 5000)
     </script>
   </body>
 </html>

@@ -16,8 +16,8 @@ interface GeoData {
 const sessionData: Map<String, GeoData> = new Map()
 
 sessionData.set('test-id', {
-  latitude: 50.505,
-  longitude: -0.09,
+  latitude: 43.3,
+  longitude: 5.4,
   key: 'test-key',
   timestamp: new Date().getTime()
 })

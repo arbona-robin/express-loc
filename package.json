@@ -1,7 +1,7 @@
 {
   "private": true,
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "scripts": {
     "dev": "sudo docker-compose -f docker-compose.yml up --build --remove-orphans"
