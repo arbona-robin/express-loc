@@ -19,6 +19,7 @@ client.query(`
     id TEXT PRIMARY KEY,
     latitude REAL,
     longitude REAL,
+    accuracy REAL,
     timestamp BIGINT,
     key TEXT
   )
@@ -29,6 +30,7 @@ interface GeoData {
   longitude: number
   key: string
   timestamp: number
+  accuracy: number
 }
 
 
@@ -53,7 +55,7 @@ app.post('/api/session/:id', async (req, res) => {
   if (session.rowCount === 0) {
 
     // Create session
-    const session = await client.query(`INSERT INTO sessions (id, latitude, longitude, timestamp, key) VALUES ('${id}', ${geoData.latitude}, ${geoData.longitude}, ${geoData.timestamp}, '${geoData.key}')`)
+    const session = await client.query(`INSERT INTO sessions (id, latitude, longitude, accuracy, timestamp, key) VALUES ('${id}', ${geoData.latitude}, ${geoData.longitude}, ${geoData.accuracy}, ${geoData.timestamp}, '${geoData.key}')`)
 
     res.status(200).send('Session created')
     return
@@ -62,7 +64,7 @@ app.post('/api/session/:id', async (req, res) => {
 
     if (geoData.key === session.rows[0].key) {
       // Update session
-      const session = await client.query(`UPDATE sessions SET latitude = ${geoData.latitude}, longitude = ${geoData.longitude}, timestamp = ${geoData.timestamp} WHERE id = '${id}'`)
+      const session = await client.query(`UPDATE sessions SET latitude = ${geoData.latitude}, longitude = ${geoData.longitude}, accuracy = ${geoData.accuracy}, timestamp = ${geoData.timestamp} WHERE id = '${id}'`)
       res.status(200).send('Session updated')
     } else {
       res.status(400).send('Invalid key')
@@ -98,7 +100,8 @@ app.get('/api/session/:id', async (req, res) => {
       res.status(200).json({
         latitude: geoData.latitude,
         longitude: geoData.longitude,
-        timestamp: geoData.timestamp
+        accuracy: geoData.accuracy,
+        timestamp: geoData.timestamp,
       })
     } else {
       await client.query(`DELETE FROM sessions WHERE id = '${id}'`)

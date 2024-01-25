@@ -49,11 +49,9 @@
           fetch(`api/session/${sessionId}`)
             .then(response => response.json())
             .then(data => {
-              // Update the map
-              console.log('Update map')
-              map.setView([data.latitude, data.longitude], 13)
+              map.setView([data.latitude, data.longitude], 18)
               circle.setLatLng([data.latitude, data.longitude])
-              circle.setRadius(100)
+              circle.setRadius(data.accuracy)
             })
         }
 
