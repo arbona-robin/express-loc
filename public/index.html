@@ -9,58 +9,55 @@
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       #map {
-        height: 80vh;
+        height: 100vh;
       }
     </style>
   </head>
-  <body>
-    <h1>Locate me!</h1>
+  <body class="bg-white dark:bg-gray-900">
     <div id="map"></div>
-    <script>
-      const getSessionId = () => {
-        const queryString = window.location.search
-        const urlParams = new URLSearchParams(queryString)
-        return urlParams.get('session')
-      }
-
-      const sessionId = getSessionId()
-
-      var map = L.map('map')
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:
-          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-        maxZoom: 18,
-      }).addTo(map)
-
-      var circle = L.circleMarker([0, 0]).addTo(map)
-
-      if (sessionId) {
-        const updateMap = () => {
-          fetch(`api/session/${sessionId}`)
-            .then(response => response.json())
-            .then(data => {
-              map.setView([data.latitude, data.longitude], 18)
-              circle.setLatLng([data.latitude, data.longitude])
-              circle.setRadius(data.accuracy)
-            })
-        }
-
-        // Initialize map
-        updateMap()
-
-        // Refresh map every X ms
-        setInterval(updateMap, 5000)
-      }
-    </script>
+    <div id="no-session" style="display: none">
+      <section class="bg-white dark:bg-gray-900">
+        <div
+          class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12"
+        >
+          <div class="mr-auto place-self-center lg:col-span-7">
+            <h1
+              class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white"
+            >
+              Locate me!
+            </h1>
+            <p
+              class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+            >
+              Share your location with your friends and family while doing your favorite activities.
+              Your loved one can follow you in real time and be sure you are safe.
+            </p>
+            <input
+              type="text"
+              id="session-id"
+              class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+            />
+            <button
+              id="follow"
+              class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+            >
+              Follow
+            </button>
+          </div>
+          <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+            <img src="/static/images/map-isometric.png" alt="map isometric" />
+          </div>
+        </div>
+      </section>
+    </div>
   </body>
+  <script src="/static/js/main.js"></script>
 </html>

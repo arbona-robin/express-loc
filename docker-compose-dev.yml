@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: node:18-alpine
+    image: node:alpine
     volumes:
       - ./node_modules:/node_modules
       - ./package.json:/package.json
@@ -16,6 +16,7 @@ services:
       - db
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+      - PORT=3000
 
   db:
     image: postgres:13-alpine
@@ -23,5 +24,3 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-    ports:
-      - 5432:5432

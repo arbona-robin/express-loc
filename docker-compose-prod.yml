@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    image: node:alpine
+    volumes:
+      - ./node_modules:/node_modules
+      - ./package.json:/package.json
+      - ./tsconfig.json:/tsconfig.json
+      - ./public:/public
+      - ./src:/src
+    command: sh -c "yarn build && yarn start"
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+      - PORT=3000
+
+  db:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres

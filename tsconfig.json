@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "composite": true,
     "baseUrl": ".",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "outDir": "./dist"
   }
 }
