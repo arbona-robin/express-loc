@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <title>Locate me!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Share your location with your friends and family while doing your favorite activities. Your loved one can follow you in real time and be sure you are safe."
+    />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -15,14 +20,9 @@
       crossorigin=""
     ></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      #map {
-        height: 100vh;
-      }
-    </style>
   </head>
   <body class="bg-white dark:bg-gray-900">
-    <div id="map"></div>
+    <div style="height: 100vh" id="map"></div>
     <div id="no-session" style="display: none">
       <section class="bg-white dark:bg-gray-900">
         <div
@@ -49,7 +49,7 @@
               id="follow"
               class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
             >
-              Follow
+              Locate !
             </button>
           </div>
           <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
