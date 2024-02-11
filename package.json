@@ -8,6 +8,7 @@
     "dev:mac": "docker-compose -f docker-compose-dev.yml up --build --remove-orphans",
     "prod": "sudo docker-compose -f docker-compose-prod.yml up --build --remove-orphans",
     "prod:mac": "docker-compose -f docker-compose-prod.yml up --build --remove-orphans",
+    "prod:debian": "docker compose -f docker-compose-prod.yml up --build --detach --remove-orphans",
     "build": "tsc",
     "start": "node dist/app.js"
   },
