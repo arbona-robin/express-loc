@@ -4,6 +4,8 @@ const OPEN_STREE_MAP = {
   attribution:
     'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
 }
+const SESSION_NOT_FOUND_TEXT =
+  'It is likely that the session has expired. All sessions are removed after 24 hours.'
 
 // Session ID form initialization
 document.getElementById('follow').addEventListener('click', async () => {
@@ -15,7 +17,7 @@ document.getElementById('follow').addEventListener('click', async () => {
   // Check if session ID Exists
   const response = await fetch(`${API_ROUTE}/${sessionId}`)
   if (response.status !== 200) {
-    alert('Session ID not found')
+    alert(SESSION_NOT_FOUND_TEXT)
     return
   }
   window.location.href = `?session=${sessionId}`
@@ -59,8 +61,18 @@ if (sessionId) {
 
   // Update map location
   const updateMap = () => {
+    let displayedAlerts = []
     fetch(`${API_ROUTE}/${sessionId}`)
       .then(response => response.json())
+      .catch(error => {
+        window.location.href = '/'
+
+        if (!displayedAlerts.includes(sessionId)) {
+          alert(SESSION_NOT_FOUND_TEXT)
+          displayedAlerts.push(sessionId)
+        }
+        console.error('Error:', error)
+      })
       .then(data => {
         map.setView([data.latitude, data.longitude], 18)
         circle.setLatLng([data.latitude, data.longitude])
