@@ -2,26 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Share loc!</title>
+    <title>Support - Share loc!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Share your location with your friends and family while doing your favorite activities. Your loved one can follow you in real time and be sure you are safe."
+      content="Get support for Share loc! app. Contact us for app issues, general feedback, and feature enhancement requests."
     />
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.svg" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"></script>
   </head>
   <header
     class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 dark:bg-gray-800"
@@ -85,13 +74,13 @@
           class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5"
         >
           <a
-            class="font-medium text-blue-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+            class="font-medium text-gray-600 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
             href="/"
             aria-current="page"
             >Landing</a
           >
           <a
-            class="font-medium text-gray-600 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+            class="font-medium text-blue-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
             href="/support"
             >Support</a
           >
@@ -105,42 +94,55 @@
     </nav>
   </header>
   <body class="bg-white dark:bg-gray-900">
-    <div style="height: 100vh" id="map"></div>
-    <div id="no-session" style="display: none">
-      <section class="bg-white dark:bg-gray-900">
-        <div
-          class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12"
-        >
-          <div class="mr-auto place-self-center lg:col-span-7">
-            <h1
-              class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white"
-            >
-              Share loc!
-            </h1>
-            <p
-              class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
-            >
-              Share your location with your friends and family while doing your favorite activities.
-              Your loved one can follow you in real time and be sure you are safe.
-            </p>
-            <input
-              type="text"
-              id="session-id"
-              class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-            />
-            <button
-              id="follow"
-              class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-            >
-              Locate !
-            </button>
-          </div>
-          <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img src="/static/images/map-isometric.png" alt="map isometric" />
-          </div>
+    <section class="bg-white dark:bg-gray-900">
+      <div
+        class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12"
+      >
+        <div class="mr-auto place-self-center lg:col-span-7">
+          <h1
+            class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white"
+          >
+            Support
+          </h1>
+          <p
+            class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+          >
+            Contact us for app issues, general feedback, and feature enhancement requests.
+          </p>
+          <h2 class="text-3xl dark:text-white">Contact Information</h2>
+          <p
+            class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+          >
+            Arbona,<br />
+            Share loc! Inc.<br />
+            6 place des moulins,<br />
+            13002 Marseille France<br />
+            <br />
+            <a class="underline" href="mailto:arbona.robin@gmail.com">Share loc! support mail.</a
+            ><br />
+          </p>
+          <h2 class="text-3xl dark:text-white">Frequently Asked Questions</h2>
+          <p
+            class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+          >
+            <details>
+              <summary
+                class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+              >
+                How do I report a bug?
+              </summary>
+              <p
+                class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+              >
+                You can report a bug by sending an email to
+                <a class="underline" href="mailto:arbona.robin@gmail.com"
+                  >Share loc! support mail.</a
+                >
+              </p>
+            </details>
+          </p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </body>
-  <script src="/static/js/main.js"></script>
 </html>
