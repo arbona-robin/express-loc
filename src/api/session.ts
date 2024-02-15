@@ -58,7 +58,14 @@ router.post('/session/:id', async (req, res) => {
     if (session.rowCount === 0) {
 
         // Create session
-        await sessionModel.createSession(id, geoData)
+
+        try {
+            await sessionModel.createSession(id, geoData)
+        } catch {
+            res.status(200).send('Session creation failed')
+            return
+        }
+
         res.status(200).send('Session created')
         return
 

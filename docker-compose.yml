@@ -1,7 +1,8 @@
 version: '3'
 services:
-  web:
+  express:
     image: node:alpine
+    container_name: express-loc
     volumes:
       - ./node_modules:/node_modules
       - ./package.json:/package.json
@@ -9,17 +10,28 @@ services:
       - ./public:/public
       - ./src:/src
     command: sh -c "yarn build && yarn start"
-    ports:
-      - '3000:3000'
+    restart: always
     depends_on:
       - db
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-      - PORT=3000
+      - PORT=80
+      - VIRTUAL_HOST=loc.arbona.dev
+      - LETSENCRYPT_HOST=loc.arbona.dev
+      - LETSENCRYPT_EMAIL=arbona.robin@gmail.com
+    networks:
+      - "net"
 
   db:
     image: postgres:13-alpine
+    container_name: express-loc-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
+    networks:
+      - "net"
+
+networks:
+  net:
+    external: true
