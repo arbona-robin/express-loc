@@ -24,6 +24,7 @@ class SessionModel {
         longitude REAL,
         accuracy REAL,
         timestamp NUMERIC,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         key TEXT
         )
         `)
@@ -52,6 +53,11 @@ class SessionModel {
 
     async deleteSession(id: string) {
         const session = await this.client.query(`DELETE FROM sessions WHERE id = $1;`, [id])
+        return session;
+    }
+
+    async deleteAllSessionsOlderThan24Hours() {
+        const session = await this.client.query(`DELETE FROM sessions WHERE created_at < NOW() - INTERVAL '1 DAY';`)
         return session;
     }
 }
