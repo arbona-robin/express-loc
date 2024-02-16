@@ -4,10 +4,12 @@ import sessionRoute from './api/session'
 import getClient from './db/db'
 import SessionModel from './model/Session'
 import * as cron from 'node-cron'
+import helmet from "helmet";
 
 const app = express()
 
 app.use(express.json())
+app.use(helmet())
 
 const port = process.env.PORT || 3000
 
