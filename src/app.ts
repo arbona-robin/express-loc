@@ -13,7 +13,7 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        "script-src": ["'self'", "unpkg.com", "cdn.jsdelivr.net", "cdn.tailwindcss.com"],
+        "script-src": ["loc.arbona.dev", "unpkg.com", "cdn.jsdelivr.net", "cdn.tailwindcss.com"],
       },
     },
   })
