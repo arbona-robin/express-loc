@@ -9,7 +9,15 @@ import helmet from "helmet";
 const app = express()
 
 app.use(express.json())
-app.use(helmet())
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "script-src": ["'self'", "unpkg.com", "cdn.jsdelivr.net", "cdn.tailwindcss.com"],
+      },
+    },
+  })
+);
 
 const port = process.env.PORT || 3000
 
