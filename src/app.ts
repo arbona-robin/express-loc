@@ -55,7 +55,7 @@ app.get('/hosting', (req, res) => {
   res.sendFile(path.join('/public', 'hosting.html'))
 })
 
-// Web app route
+// Serve landing page
 app.get('/', (req, res) => {
   res.sendFile(path.join('/public', 'index.html'))
 })
