@@ -15,12 +15,12 @@ services:
       - db
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-      - PORT=80
-      - VIRTUAL_HOST=loc.arbona.dev
-      - LETSENCRYPT_HOST=loc.arbona.dev
-      - LETSENCRYPT_EMAIL=arbona.robin@gmail.com
+      - PORT=${PORT}
+      - VIRTUAL_HOST=${HOST}
+      - LETSENCRYPT_HOST=${HOST}
+      - LETSENCRYPT_EMAIL=${EMAIL}
     networks:
-      - "net"
+      - 'net'
 
   db:
     image: postgres:13-alpine
@@ -30,7 +30,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     networks:
-      - "net"
+      - 'net'
 
 networks:
   net:
