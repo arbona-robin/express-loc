@@ -13,7 +13,8 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        "script-src": ["loc.arbona.dev", "unpkg.com", "cdn.jsdelivr.net", "cdn.tailwindcss.com"],
+        "script-src": ["'self'", "loc.arbona.dev", "unpkg.com", "cdn.jsdelivr.net", "cdn.tailwindcss.com"],
+        imgSrc: ["'self'", "*.openstreetmap.org", "data:"],
       },
     },
   })
@@ -47,6 +48,11 @@ app.get('/support', (req, res) => {
 // Serve privacy page
 app.get('/privacy', (req, res) => {
   res.sendFile(path.join('/public', 'privacy.html'))
+})
+
+// Serve hosting page
+app.get('/hosting', (req, res) => {
+  res.sendFile(path.join('/public', 'hosting.html'))
 })
 
 // Web app route
