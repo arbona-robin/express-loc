@@ -49,6 +49,28 @@ express-loc: This is the Express.js application. It's accessible at http://loc.a
 express-loc-db: This is the PostgreSQL database.
 The Express.js application connects to the PostgreSQL database with the connection string postgres://postgres:postgres@db:5432/postgres.
 
+## Test server without Share Loc! app
+
+You can test the server without Share Loc! app by using curl or Postman. (Change the URL here http://localhost:3000 to your own server URL.)
+
+To create a new session:
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{
+    "latitude": 40.712776,
+    "longitude": -74.005974,
+    "key": "6789",
+    "timestamp": "1706545443.1782908",
+    "accuracy": 5
+}' http://localhost:3000/api/session/12345
+```
+
+To retrieve the session:
+
+```bash
+curl http://localhost:3000/api/session/12345
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
